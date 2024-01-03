@@ -1,9 +1,15 @@
+import Content from '@/components/sharedComponents/Content'
+import Header from '@/components/sharedComponents/Header'
 import Image from 'next/image'
 
-export default function Home() {
+export default async function Home() {
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Personal management app</h1>
+    <main className="lg:flex min-h-screen pt-10">
+      <Header />
+      <section className=''>
+        <Content />
+      </section>
     </main>
   )
 }
