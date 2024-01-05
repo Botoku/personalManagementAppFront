@@ -1,7 +1,8 @@
 
 type Todo = {
-  _id: React.Key;
+  _id: string | React.Key ;
   name: String;
   dateCreated?: String;
   completedStatus: Boolean;
+  dateDue: Date
 };
