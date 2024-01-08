@@ -6,3 +6,10 @@ type Todo = {
   completedStatus: Boolean;
   dateDue: Date
 };
+
+type ToBuy = {
+  _id: string | React.Key,
+  category: string,
+  estimatedPrice: string,
+  itemToBuy: string
+}

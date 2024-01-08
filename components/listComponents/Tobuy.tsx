@@ -1,10 +1,15 @@
 import React from 'react'
+import TobuyUploadForm from './TobuyUploadForm'
+import TobuyList from './TobuyList'
 
 type Props = {}
 
 const Tobuy = (props: Props) => {
   return (
-    <div>Tobuy</div>
+    <div>
+      <TobuyUploadForm/>
+      <TobuyList/>
+    </div>
   )
 }
 

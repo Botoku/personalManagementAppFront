@@ -24,15 +24,15 @@ type ObjProps = {
 };
 
 const TodoList = () => {
-  const [todos, setTodos] = useState({} as Props) ;
   useEffect(() => {
     const getTodos = async () => {
       const data = await axios.get("http://localhost:4000/api/v1/todo");
-
+      
       setTodos(data);
     };
     getTodos();
   }, []);
+  const [todos, setTodos] = useState({} as Props) ;
   const [activeTodoEdit, setActiveTodoEdit] = useState("");
   const [todoEditName, setTodoEditName] = useState("");
   const [todoEditDate, setTodoEditDate] = useState("");
