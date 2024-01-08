@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 type Props = {
-  renderData: {
+  data: {
     todos: [
       {
         _id: React.Key | string;
@@ -16,13 +17,22 @@ type Props = {
   };
 };
 type ObjProps = {
-    name ?: string
-    dateCreated?: String;
-    completedStatus?: Boolean;
-    dateDue?: string;
-}
+  name?: string;
+  dateCreated?: String;
+  completedStatus?: Boolean;
+  dateDue?: string;
+};
 
-const TodoList = (Props: Props) => {
+const TodoList = () => {
+  const [todos, setTodos] = useState({} as Props) ;
+  useEffect(() => {
+    const getTodos = async () => {
+      const data = await axios.get("http://localhost:4000/api/v1/todo");
+
+      setTodos(data);
+    };
+    getTodos();
+  }, []);
   const [activeTodoEdit, setActiveTodoEdit] = useState("");
   const [todoEditName, setTodoEditName] = useState("");
   const [todoEditDate, setTodoEditDate] = useState("");
@@ -39,12 +49,11 @@ const TodoList = (Props: Props) => {
       });
   };
   const handleTodoEditSubmit = (id: string) => {
+    const editObj: ObjProps = {};
 
-    const editObj: ObjProps = {}
-
-    if(todoEditName.length > 1)editObj.name = todoEditName
-    if(todoEditDate.length > 1)editObj.dateDue = todoEditDate
-    console.log(editObj)
+    if (todoEditName.length > 1) editObj.name = todoEditName;
+    if (todoEditDate.length > 1) editObj.dateDue = todoEditDate;
+    console.log(editObj);
     axios
       .patch(`http://localhost:4000/api/v1/todo/${id}`, editObj)
       .then(function (response) {
@@ -52,7 +61,6 @@ const TodoList = (Props: Props) => {
         setTodoEditDate("");
         setTodoEditName("");
         window.location.reload();
-
       })
       .catch(function (error) {
         // handle error
@@ -65,8 +73,8 @@ const TodoList = (Props: Props) => {
   };
 
   return (
-    Props.renderData &&
-    Props.renderData.todos.map((todo: Todo) => (
+    todos?.data?.todos &&
+    todos.data.todos.map((todo: Todo) => (
       <div key={todo._id} className="my-3">
         <p>{todo.name}</p>
         {todo.completedStatus ? (

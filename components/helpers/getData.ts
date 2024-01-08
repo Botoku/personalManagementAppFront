@@ -13,9 +13,4 @@ async function getData(url: string) {
   return res.json();
 }
 
-//   async function retrieveStory (params){
-//     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/stories/${params}`)
-//     console.log("response", response)
-//     return response.data
-//   }
 export { getData };
