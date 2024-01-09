@@ -8,8 +8,6 @@ const TobuyUploadForm = (props: Props) => {
   const [itemCostValue, setItemCostValue] = useState(0);
   const [category, setCategory] = useState('home')
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log(itemCostValue, itemToBuyValue, category)
     axios
       .post(`http://localhost:4000/api/v1/tobuy`, {
         itemToBuy: itemToBuyValue,
