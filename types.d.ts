@@ -13,3 +13,11 @@ type ToBuy = {
   estimatedPrice: string,
   itemToBuy: string
 }
+type Meal = {
+  _id: string | React.Key ;
+  mealName: string;
+  ingredients?: string[];
+  recipeLinks?: string[];
+  category: string;
+  description?: string;
+}
