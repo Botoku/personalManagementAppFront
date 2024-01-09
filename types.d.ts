@@ -25,3 +25,11 @@ type Idea = {
   ideaName: string;
   completedStatus: Boolean;
 };
+
+type Expense = {
+  _id: string | React.Key;
+  expenseName: string;
+  date: Date;
+  amount: number;
+  location?: string
+};

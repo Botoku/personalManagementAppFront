@@ -6,8 +6,6 @@ type Props = {};
 const IdeaUploadForm = (props: Props) => {
   const [ideaName, setIdeaName] = useState("");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(ideaName);
     axios
       .post(`http://localhost:4000/api/v1/ideas`, {
         ideaName,

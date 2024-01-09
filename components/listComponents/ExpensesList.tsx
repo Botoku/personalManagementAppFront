@@ -1,11 +1,31 @@
-import React from 'react'
-
-type Props = {}
-
-const ExpensesList = (props: Props) => {
-  return (
-    <div>ExpensesList</div>
-  )
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+type ExpensesProps = {
+    data : {
+        expenses:Expense[]
+    }
 }
 
-export default ExpensesList
+const ExpensesList = () => {
+  useEffect(() => {
+    const getExpenes = async () => {
+      const data = await axios.get("http://localhost:4000/api/v1/expenses");
+      setExpenses(data);
+    };
+    getExpenes();
+  }, []);
+  const [expenses, setExpenses] = useState({} as ExpensesProps);
+  return <div>
+    {expenses?.data?.expenses.map((exp: Expense) =>(
+        <div className="my-3" key={exp._id}>
+            <p>{exp.expenseName}</p>
+            <p>{exp.amount.toString()} pesos</p>
+            <p>Location: {exp.location}</p>
+            <p>Date: {new Date(exp.date).toLocaleDateString()}</p>
+        </div>
+    ))}
+  </div>;
+};
+
+export default ExpensesList;
