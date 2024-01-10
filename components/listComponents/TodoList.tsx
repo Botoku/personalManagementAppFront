@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-
 type Props = {
   data: {
     todos: [
@@ -19,7 +18,7 @@ type Props = {
 type ObjProps = {
   name?: string;
   dateCreated?: String;
-  completedStatus?: Boolean;
+  completedStatus?: boolean | unknown;
   dateDue?: string;
 };
 
@@ -27,15 +26,19 @@ const TodoList = () => {
   useEffect(() => {
     const getTodos = async () => {
       const data = await axios.get("http://localhost:4000/api/v1/todo");
-      
+
       setTodos(data);
     };
     getTodos();
   }, []);
-  const [todos, setTodos] = useState({} as Props) ;
+  const [todos, setTodos] = useState({} as Props);
   const [activeTodoEdit, setActiveTodoEdit] = useState("");
   const [todoEditName, setTodoEditName] = useState("");
   const [todoEditDate, setTodoEditDate] = useState("");
+  const [todoEditCheckedValue, setTodoEditCheckedValue] = useState<
+    unknown | Boolean
+  >();
+  const [todoEditChecked, setTodoEditChecked] = useState(false);
   const [editTodoId, setEditTodoId] = useState("");
   const handleTodoDelete = (id: string) => {
     axios
@@ -48,11 +51,20 @@ const TodoList = () => {
         console.error(error);
       });
   };
-  const handleTodoEditSubmit = (id: string) => {
+  const handleTodoCheck = (completedStatus: Boolean) => {
+    if (!todoEditChecked) {
+      setTodoEditChecked(true);
+      setTodoEditCheckedValue(!completedStatus);
+    }
+    setTodoEditCheckedValue(!todoEditCheckedValue);
+  };
+  const handleTodoEditSubmit = (id: string, completedStatus: Boolean) => {
     const editObj: ObjProps = {};
 
     if (todoEditName.length > 1) editObj.name = todoEditName;
     if (todoEditDate.length > 1) editObj.dateDue = todoEditDate;
+    if (todoEditChecked) editObj.completedStatus = !completedStatus;
+
     console.log(editObj);
     axios
       .patch(`http://localhost:4000/api/v1/todo/${id}`, editObj)
@@ -60,7 +72,9 @@ const TodoList = () => {
         // handle success
         setTodoEditDate("");
         setTodoEditName("");
-        window.location.reload();
+        setTodoEditCheckedValue(null!);
+        // window.location.reload();
+        console.log(response);
       })
       .catch(function (error) {
         // handle error
@@ -69,6 +83,7 @@ const TodoList = () => {
     // setActiveTodoEdit(!activeTodoEdit)
   };
   const handleActiveTodoEdit = (id: string) => {
+    setTodoEditChecked(false);
     setActiveTodoEdit(id);
   };
 
@@ -85,7 +100,11 @@ const TodoList = () => {
 
         <div>
           {activeTodoEdit && activeTodoEdit === todo._id ? (
-            <button onClick={() => handleTodoEditSubmit(todo._id as string)}>
+            <button
+              onClick={() =>
+                handleTodoEditSubmit(todo._id as string, todo.completedStatus)
+              }
+            >
               Submit Todo Edit
             </button>
           ) : (
@@ -113,7 +132,27 @@ const TodoList = () => {
                   className="text-black"
                 />
 
-                <label htmlFor="completed">Completed?</label>
+                <label htmlFor="completed">
+                  {todo.completedStatus ? (
+                    <p>Mark Incomplete</p>
+                  ) : (
+                    <p>Mark Completed</p>
+                  )}
+                </label>
+                <div
+                  // onClick={() => handleTodoCheck(todo.completedStatus)}
+                  onClick={() => setTodoEditChecked(!todoEditChecked)}
+                  className={`w-4 h-4 rounded-full  ${
+                    todoEditChecked
+                      ? "bg-red-400 border-white"
+                      : "bg-white border-black"
+                  }`}
+                ></div>
+                {/* <input
+                  type="checkbox"
+                  // checked={todoEditCheckedValue}
+                  value=""
+                /> */}
               </div>
               <button onClick={() => setActiveTodoEdit("")}>Cancel Edit</button>
             </form>
