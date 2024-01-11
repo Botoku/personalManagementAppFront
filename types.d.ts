@@ -11,6 +11,7 @@ type ToBuy = {
   category: string;
   estimatedPrice: string;
   itemToBuy: string;
+  boughtStatus: boolean
 };
 type Meal = {
   _id: string | React.Key;

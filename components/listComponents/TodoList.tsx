@@ -39,7 +39,6 @@ const TodoList = () => {
     unknown | Boolean
   >();
   const [todoEditChecked, setTodoEditChecked] = useState(false);
-  const [editTodoId, setEditTodoId] = useState("");
   const handleTodoDelete = (id: string) => {
     axios
       .delete(`http://localhost:4000/api/v1/todo/${id}`)
@@ -51,13 +50,7 @@ const TodoList = () => {
         console.error(error);
       });
   };
-  const handleTodoCheck = (completedStatus: Boolean) => {
-    if (!todoEditChecked) {
-      setTodoEditChecked(true);
-      setTodoEditCheckedValue(!completedStatus);
-    }
-    setTodoEditCheckedValue(!todoEditCheckedValue);
-  };
+
   const handleTodoEditSubmit = (id: string, completedStatus: Boolean) => {
     const editObj: ObjProps = {};
 
@@ -73,14 +66,12 @@ const TodoList = () => {
         setTodoEditDate("");
         setTodoEditName("");
         setTodoEditCheckedValue(null!);
-        // window.location.reload();
-        console.log(response);
+        window.location.reload();
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       });
-    // setActiveTodoEdit(!activeTodoEdit)
   };
   const handleActiveTodoEdit = (id: string) => {
     setTodoEditChecked(false);
@@ -140,7 +131,6 @@ const TodoList = () => {
                   )}
                 </label>
                 <div
-                  // onClick={() => handleTodoCheck(todo.completedStatus)}
                   onClick={() => setTodoEditChecked(!todoEditChecked)}
                   className={`w-4 h-4 rounded-full  ${
                     todoEditChecked
@@ -148,11 +138,7 @@ const TodoList = () => {
                       : "bg-white border-black"
                   }`}
                 ></div>
-                {/* <input
-                  type="checkbox"
-                  // checked={todoEditCheckedValue}
-                  value=""
-                /> */}
+       
               </div>
               <button onClick={() => setActiveTodoEdit("")}>Cancel Edit</button>
             </form>
