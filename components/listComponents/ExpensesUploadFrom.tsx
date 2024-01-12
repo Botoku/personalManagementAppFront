@@ -13,7 +13,7 @@ const ExpenseUploadForm = (props: Props) => {
   const [amount, setAmount] = useState<number>();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     axios
-      .post(`http://localhost:4000/api/v1/expenses`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/expenses`, {
         expenseName,
         amount,
         date: theDate,

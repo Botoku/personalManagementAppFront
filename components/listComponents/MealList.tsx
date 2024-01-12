@@ -11,7 +11,7 @@ type MealsProps = {
 const MealList = () => {
   useEffect(() => {
     const getAllMeals = async () => {
-      const data = await axios.get("http://localhost:4000/api/v1/meals");
+      const data = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/meals`);
       setMeals(data);
     };
     getAllMeals();

@@ -25,7 +25,7 @@ type ObjProps = {
 const TodoList = () => {
   useEffect(() => {
     const getTodos = async () => {
-      const data = await axios.get("http://localhost:4000/api/v1/todo");
+      const data = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo`);
 
       setTodos(data);
     };
@@ -41,7 +41,7 @@ const TodoList = () => {
   const [todoEditChecked, setTodoEditChecked] = useState(false);
   const handleTodoDelete = (id: string) => {
     axios
-      .delete(`http://localhost:4000/api/v1/todo/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`)
       .then((response) => {
         console.log(`Deleted post with ID ${id}`);
         window.location.reload();
@@ -60,7 +60,7 @@ const TodoList = () => {
 
     console.log(editObj);
     axios
-      .patch(`http://localhost:4000/api/v1/todo/${id}`, editObj)
+      .patch(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`, editObj)
       .then(function (response) {
         // handle success
         setTodoEditDate("");

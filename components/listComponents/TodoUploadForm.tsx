@@ -10,7 +10,7 @@ const TodoUploadForm = (props: Props) => {
   const [todo, setTodo] = useState("");
   const handleSubmit = () => {
     axios
-      .post(`http://localhost:4000/api/v1/todo`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo`, {
         name: todo,
         dateDue: theDate,
       })

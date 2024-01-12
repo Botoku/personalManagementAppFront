@@ -24,7 +24,7 @@ const TobuyList = () => {
 
   useEffect(() => {
     const getTobuy = async () => {
-      const data = await axios.get("http://localhost:4000/api/v1/tobuy");
+      const data = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy`);
       setTobuy(data);
     };
     getTobuy();
@@ -39,7 +39,7 @@ const TobuyList = () => {
 
     console.log(editObj);
     axios
-      .patch(`http://localhost:4000/api/v1/tobuy/${id}`, editObj)
+      .patch(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy/${id}`, editObj)
       .then(function (response) {
         // handle success
         setTobuyEditCategory('')
@@ -54,7 +54,7 @@ const TobuyList = () => {
   };
   const handleTobuyDelete = (id: string) => {
     axios
-      .delete(`http://localhost:4000/api/v1/tobuy/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy/${id}`)
       .then((response) => {
         console.log(`Deleted tobuy with ID ${id}`);
         window.location.reload();

@@ -10,7 +10,7 @@ type ExpensesProps = {
 const ExpensesList = () => {
   useEffect(() => {
     const getExpenes = async () => {
-      const data = await axios.get("http://localhost:4000/api/v1/expenses");
+      const data = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/expenses`);
       setExpenses(data);
     };
     getExpenes();

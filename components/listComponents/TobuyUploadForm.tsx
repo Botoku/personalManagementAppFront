@@ -9,7 +9,7 @@ const TobuyUploadForm = (props: Props) => {
   const [category, setCategory] = useState('home')
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     axios
-      .post(`http://localhost:4000/api/v1/tobuy`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy`, {
         itemToBuy: itemToBuyValue,
         estimatedPrice: `${itemCostValue} pesos`,
         category
