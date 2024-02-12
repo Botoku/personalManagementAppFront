@@ -29,7 +29,7 @@ const TodoList = () => {
     const getTodos = async () => {
       if (user) {
         const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${user.id}`
         );
 
         setTodos(data);
@@ -47,7 +47,7 @@ const TodoList = () => {
   const [todoEditChecked, setTodoEditChecked] = useState(false);
   const handleTodoDelete = (id: string) => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${id}`)
       .then((response) => {
         console.log(`Deleted post with ID ${id}`);
         window.location.reload();
@@ -67,7 +67,7 @@ const TodoList = () => {
     console.log(editObj);
     axios
       .patch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${id}`,
         editObj
       )
       .then(function (response) {

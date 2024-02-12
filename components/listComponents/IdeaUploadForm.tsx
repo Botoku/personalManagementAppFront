@@ -11,7 +11,7 @@ const IdeaUploadForm = (props: Props) => {
   const [ideaName, setIdeaName] = useState("");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/ideas`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/ideas`, {
         ideaName,
         authorID: user?.id,
 
