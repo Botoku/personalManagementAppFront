@@ -1,23 +1,30 @@
 "use client";
 import React, { useState } from "react";
 import Flatpickr from "react-flatpickr";
+import { useUser } from "@clerk/nextjs";
+
 
 import axios from "axios";
 type Props = {};
 
 const ExpenseUploadForm = (props: Props) => {
+  const { user } = useUser();
+
   const [expenseName, setExpenseName] = useState("");
   const [theDate, setTheDate] = useState(new Date());
   const [location, setLocation] = useState('');
 
   const [amount, setAmount] = useState<number>();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (user?.id)
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/expenses`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/expenses`, {
         expenseName,
         amount,
         date: theDate,
-        location
+        location,
+        authorID: user?.id,
+
       })
       .then((res) => {
         setExpenseName('')

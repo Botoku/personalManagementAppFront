@@ -2,27 +2,33 @@
 import React, { useState } from "react";
 import Flatpickr from "react-flatpickr";
 import axios from "axios";
-
+import { useUser } from "@clerk/nextjs";
 type Props = {};
 
 const TodoUploadForm = (props: Props) => {
+  const { user } = useUser();
   const [theDate, setTheDate] = useState(new Date());
   const [todo, setTodo] = useState("");
   const handleSubmit = () => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo`, {
-        name: todo,
-        dateDue: theDate,
-      })
-      .then(function (response) {
-        // handle success
-        setTheDate(new Date());
-        setTodo("");
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+    if (user?.id)
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo`,
+          {
+            name: todo,
+            dateDue: theDate,
+            authorID: user?.id,
+          }
+        )
+        .then(function (response) {
+          // handle success
+          setTheDate(new Date());
+          setTodo("");
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
   };
 
   return (
@@ -54,9 +60,7 @@ const TodoUploadForm = (props: Props) => {
           />
         </div>
 
-        <button
-          className="bg-purple-300 px-3 py-2 rounded-2xl text-black"
-        >
+        <button className="bg-purple-300 px-3 py-2 rounded-2xl text-black">
           Create Todo
         </button>
       </div>

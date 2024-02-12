@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+
 type TobuyProps = {
   data: {
     tobuy: ToBuy[];
@@ -14,6 +16,8 @@ type ObjProps = {
 };
 
 const TobuyList = () => {
+  const { user } = useUser();
+
   const [toBuy, setTobuy] = useState({} as TobuyProps);
   const [activeToBuyEdit, setActiveToBuyEdit] = useState("");
   const [tobuyEditName, setTobuyEditName] = useState("");
@@ -24,11 +28,15 @@ const TobuyList = () => {
 
   useEffect(() => {
     const getTobuy = async () => {
-      const data = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy`);
-      setTobuy(data);
+      if (user) {
+        const data = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/tobuy/${user.id}`
+        );
+        setTobuy(data);
+      }
     };
     getTobuy();
-  }, []);
+  }, [user]);
   const handleToBuyEditSubmit = (id: string) => {
     const editObj: ObjProps = {};
 
@@ -39,12 +47,15 @@ const TobuyList = () => {
 
     console.log(editObj);
     axios
-      .patch(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy/${id}`, editObj)
+      .patch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/tobuy/${id}`,
+        editObj
+      )
       .then(function (response) {
         // handle success
-        setTobuyEditCategory('')
-        setTobuyEditName('')
-        setTobuyEditPrice('')
+        setTobuyEditCategory("");
+        setTobuyEditName("");
+        setTobuyEditPrice("");
         window.location.reload();
       })
       .catch(function (error) {
@@ -54,7 +65,7 @@ const TobuyList = () => {
   };
   const handleTobuyDelete = (id: string) => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/tobuy/${id}`)
       .then((response) => {
         console.log(`Deleted tobuy with ID ${id}`);
         window.location.reload();

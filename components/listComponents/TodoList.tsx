@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useUser } from "@clerk/nextjs";
 type Props = {
   data: {
     todos: [
@@ -23,14 +23,20 @@ type ObjProps = {
 };
 
 const TodoList = () => {
+  const { user } = useUser();
+
   useEffect(() => {
     const getTodos = async () => {
-      const data = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo`);
+      if (user) {
+        const data = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${user.id}`
+        );
 
-      setTodos(data);
+        setTodos(data);
+      }
     };
     getTodos();
-  }, []);
+  }, [user]);
   const [todos, setTodos] = useState({} as Props);
   const [activeTodoEdit, setActiveTodoEdit] = useState("");
   const [todoEditName, setTodoEditName] = useState("");
@@ -41,7 +47,7 @@ const TodoList = () => {
   const [todoEditChecked, setTodoEditChecked] = useState(false);
   const handleTodoDelete = (id: string) => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${id}`)
       .then((response) => {
         console.log(`Deleted post with ID ${id}`);
         window.location.reload();
@@ -60,7 +66,10 @@ const TodoList = () => {
 
     console.log(editObj);
     axios
-      .patch(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`, editObj)
+      .patch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${id}`,
+        editObj
+      )
       .then(function (response) {
         // handle success
         setTodoEditDate("");
@@ -138,7 +147,6 @@ const TodoList = () => {
                       : "bg-white border-black"
                   }`}
                 ></div>
-       
               </div>
               <button onClick={() => setActiveTodoEdit("")}>Cancel Edit</button>
             </form>

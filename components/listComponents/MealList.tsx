@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useUser } from "@clerk/nextjs";
 
 type MealsProps = {
   data: {
@@ -9,13 +10,19 @@ type MealsProps = {
 };
 
 const MealList = () => {
+  const { user } = useUser();
+
   useEffect(() => {
     const getAllMeals = async () => {
-      const data = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/meals`);
-      setMeals(data);
+      if (user) {
+        const data = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/meals/${user.id}`
+        );
+        setMeals(data);
+      }
     };
     getAllMeals();
-  }, []);
+  }, [user]);
   const [meals, setMeals] = useState({} as MealsProps);
   return (
     <div>

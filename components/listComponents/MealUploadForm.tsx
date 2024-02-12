@@ -1,9 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+
 type Props = {};
 
 const MealUploadForm = (props: Props) => {
+  const { user } = useUser();
+
   const [mealName, setMealName] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [recipeLinks, setRecipeLinks] = useState("");
@@ -18,12 +22,15 @@ const MealUploadForm = (props: Props) => {
     const finalIngredients = createArray(ingredients);
 
     console.log(finalIngredients, finalRecipeLinks, mealName, category);
+    if (user?.id)
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/meals`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/meals`, {
         mealName,
         ingredients: finalIngredients.length > 1 && finalIngredients,
         recipeLinks: finalRecipeLinks.length > 1 && finalRecipeLinks,
         category,
+        authorID: user?.id,
+
       })
       .then((res) => {
         setMealName("");

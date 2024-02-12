@@ -1,10 +1,10 @@
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "flatpickr/dist/themes/material_green.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ContentDisplayProvider } from "@/components/helpers/ContextProvider";
+import Header from "@/components/sharedComponents/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,9 @@ export default function RootLayout({
     <ClerkProvider>
       <ContentDisplayProvider>
         <html lang="en">
-          <body className={inter.className}>{children}</body>
+          <body className={inter.className}>
+            <Header /> {children}
+          </body>
         </html>
       </ContentDisplayProvider>
     </ClerkProvider>

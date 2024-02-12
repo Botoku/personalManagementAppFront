@@ -1,14 +1,20 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+
 type Props = {};
 
 const IdeaUploadForm = (props: Props) => {
+  const { user } = useUser();
+
   const [ideaName, setIdeaName] = useState("");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/ideas`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/ideas`, {
         ideaName,
+        authorID: user?.id,
+
       })
       .then((res) => {
         setIdeaName('')
