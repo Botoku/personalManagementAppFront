@@ -13,7 +13,7 @@ const TodoUploadForm = (props: Props) => {
     if (user?.id)
       axios
         .post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo`,
           {
             name: todo,
             dateDue: theDate,
