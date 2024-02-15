@@ -11,10 +11,10 @@ const Todo = (props: Props) => {
 
 
   return (
-    <div>
+    <section >
       <TodoUploadForm />
       <TodoList />
-    </div>
+    </section>
   );
 };
 

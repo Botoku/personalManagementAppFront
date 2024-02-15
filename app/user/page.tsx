@@ -1,15 +1,14 @@
-import Content from '@/components/sharedComponents/Content'
-import React from 'react'
+import Content from "@/components/sharedComponents/Content";
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const ContentPage = (props: Props) => {
   return (
-    <div>
-        <Content />
+    <section className="mt-5">
+      <Content />
+    </section >
+  );
+};
 
-    </div>
-  )
-}
-
-export default ContentPage
+export default ContentPage;

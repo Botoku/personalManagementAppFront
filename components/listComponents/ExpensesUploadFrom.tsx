@@ -18,7 +18,7 @@ const ExpenseUploadForm = (props: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (user?.id)
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/expenses`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/expenses`, {
         expenseName,
         amount,
         date: theDate,
