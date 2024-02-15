@@ -15,7 +15,7 @@ const IdeaList = () => {
     const getIdeas = async () => {
       if (user) {
         const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/ideas/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/ideas/${user.id}`
         );
         setIdeas(data);
       }

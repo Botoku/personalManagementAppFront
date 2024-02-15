@@ -16,7 +16,7 @@ const ExpensesList = () => {
     const getExpenes = async () => {
       if (user) {
         const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/expenses/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/expenses/${user.id}`
         );
         setExpenses(data);
       }

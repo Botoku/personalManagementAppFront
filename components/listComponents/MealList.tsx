@@ -16,7 +16,7 @@ const MealList = () => {
     const getAllMeals = async () => {
       if (user) {
         const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/meals/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/meals/${user.id}`
         );
         setMeals(data);
       }

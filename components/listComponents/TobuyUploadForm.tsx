@@ -14,7 +14,7 @@ const TobuyUploadForm = (props: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (user?.id)
       axios
-        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/tobuy`, {
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy`, {
           itemToBuy: itemToBuyValue,
           estimatedPrice: `${itemCostValue} pesos`,
           category,
