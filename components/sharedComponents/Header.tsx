@@ -10,11 +10,13 @@ const Header = (props: Props) => {
   const { user } = useUser();
   return (
     <header className="border-lime-100 border-b-2  ">
+      <p className="w-full text-center text-4xl my-3">Life Lens</p>
+      
       <SignedOut>
-        <Link className="mr-5" href={"/sign-in"}>
+        <Link className="mr-5 text-xl" href={"/sign-in"}>
           Sign in
         </Link>
-        <Link href={"/sign-up"}>Sign up</Link>
+        <Link className="text-xl" href={"/sign-up"}>Sign up</Link>
       </SignedOut>
 
       <div className="md:px-4 px-1 py-3 md:py-7">
