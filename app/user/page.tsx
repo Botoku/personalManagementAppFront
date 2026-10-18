@@ -7,7 +7,7 @@ const ContentPage = (props: Props) => {
   return (
     <section className="mt-5">
       <Content />
-    </section >
+    </section>
   );
 };
 

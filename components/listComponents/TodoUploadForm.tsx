@@ -13,7 +13,7 @@ const TodoUploadForm = (props: Props) => {
     if (user?.id)
       axios
         .post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo`,
           {
             name: todo,
             dateDue: theDate,
@@ -32,7 +32,7 @@ const TodoUploadForm = (props: Props) => {
   };
 
   return (
-    <form className="flex" onSubmit={handleSubmit}>
+    <form className="flex mb-6" onSubmit={handleSubmit}>
       <p className="mr-3">New Todo</p>
 
       <div className="">

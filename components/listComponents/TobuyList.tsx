@@ -30,7 +30,7 @@ const TobuyList = () => {
     const getTobuy = async () => {
       if (user) {
         const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/tobuy/${user.id}`
         );
         setTobuy(data);
       }
@@ -48,7 +48,7 @@ const TobuyList = () => {
     console.log(editObj);
     axios
       .patch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/tobuy/${id}`,
         editObj
       )
       .then(function (response) {
@@ -65,7 +65,7 @@ const TobuyList = () => {
   };
   const handleTobuyDelete = (id: string) => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/tobuy/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/tobuy/${id}`)
       .then((response) => {
         console.log(`Deleted tobuy with ID ${id}`);
         window.location.reload();

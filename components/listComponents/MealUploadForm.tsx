@@ -24,7 +24,7 @@ const MealUploadForm = (props: Props) => {
     console.log(finalIngredients, finalRecipeLinks, mealName, category);
     if (user?.id)
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/meals`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/meals`, {
         mealName,
         ingredients: finalIngredients.length > 1 && finalIngredients,
         recipeLinks: finalRecipeLinks.length > 1 && finalRecipeLinks,

@@ -29,7 +29,7 @@ const TodoList = () => {
     const getTodos = async () => {
       if (user) {
         const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${user.id}`
         );
 
         setTodos(data);
@@ -47,7 +47,7 @@ const TodoList = () => {
   const [todoEditChecked, setTodoEditChecked] = useState(false);
   const handleTodoDelete = (id: string) => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${id}`)
       .then((response) => {
         console.log(`Deleted post with ID ${id}`);
         window.location.reload();
@@ -67,7 +67,7 @@ const TodoList = () => {
     console.log(editObj);
     axios
       .patch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL}/todo/${id}`,
         editObj
       )
       .then(function (response) {
@@ -90,7 +90,7 @@ const TodoList = () => {
   return (
     todos?.data?.todos &&
     todos.data.todos.map((todo: Todo) => (
-      <div key={todo._id} className="my-3">
+      <div key={todo._id} className="mb-6 px-1 border-b pb-1 ">
         <p>{todo.name}</p>
         {todo.completedStatus ? (
           <p className="text-green-300">Completed</p>
@@ -108,7 +108,7 @@ const TodoList = () => {
               Submit Todo Edit
             </button>
           ) : (
-            <button onClick={() => handleActiveTodoEdit(todo._id as string)}>
+            <button className="border px-2 rounded" onClick={() => handleActiveTodoEdit(todo._id as string)}>
               Edit Todo
             </button>
           )}
@@ -136,7 +136,7 @@ const TodoList = () => {
                   {todo.completedStatus ? (
                     <p>Mark Incomplete</p>
                   ) : (
-                    <p>Mark Completed</p>
+                    <p >Mark Completed</p>
                   )}
                 </label>
                 <div
@@ -148,7 +148,7 @@ const TodoList = () => {
                   }`}
                 ></div>
               </div>
-              <button onClick={() => setActiveTodoEdit("")}>Cancel Edit</button>
+              <button className="border px-2 rounded" onClick={() => setActiveTodoEdit("")}>Cancel Edit</button>
             </form>
           )}
         </div>
@@ -156,7 +156,7 @@ const TodoList = () => {
 
         <button
           onClick={() => handleTodoDelete(todo._id as string)}
-          className="bg-red-300"
+          className="bg-red-300 rounded px-2"
         >
           Delete Todo
         </button>
