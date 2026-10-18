@@ -27,8 +27,9 @@ const TodoList = () => {
         const data = await axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL || process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/todo/${user.id}`,
         );
+        console.log(data)
 
-        const sortedArr = sortByDate(data.data.todos);
+        const sortedArr = sortByDate(data.data.todos,"dateDue", "dsc");
 
         setTodos(sortedArr);
       }

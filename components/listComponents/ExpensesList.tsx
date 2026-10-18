@@ -2,12 +2,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import { sortByDate } from "../helpers/sortHelpers";
 
-type ExpensesProps = {
-  data: {
-    expenses: Expense[];
-  };
-};
+type ExpensesProps = [];
 
 const ExpensesList = () => {
   const { user } = useUser();
@@ -16,17 +13,19 @@ const ExpensesList = () => {
     const getExpenes = async () => {
       if (user) {
         const data = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL || process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/expenses/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL_LOCAL || process.env.NEXT_PUBLIC_BACKEND_URL_REMOTE}/expenses/${user.id}`,
         );
-        setExpenses(data);
+        console.log(data)
+        const sorted = sortByDate(data.data.expenses, "date", "dsc");
+        setExpenses(sorted);
       }
     };
     getExpenes();
   }, [user]);
-  const [expenses, setExpenses] = useState({} as ExpensesProps);
+  const [expenses, setExpenses] = useState([] as ExpensesProps);
   return (
     <div>
-      {expenses?.data?.expenses.map((exp: Expense) => (
+      {expenses?.map((exp: Expense) => (
         <div className="my-3" key={exp._id}>
           <p>{exp.expenseName}</p>
           <p>{exp.amount.toString()} pesos</p>
