@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/utils/db";
+import { dbConnect } from "@/utils/db.js";
 
 import Todo from "./model";
 
